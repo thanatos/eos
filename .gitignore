@@ -1,0 +1,6 @@
+*.o
+
+# built ISOs for testing.
+*.iso
+# The kernel binary.
+*.bin
