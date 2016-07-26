@@ -10,4 +10,4 @@ x86_64-elf-ld \
 	--nmagic \
 	-o kernel.bin \
 	-T eos.ld \
-	multiboot-header.o entry.o
+	multiboot-header.o entry.o text-ops.o
