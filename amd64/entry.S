@@ -12,7 +12,7 @@ start:
 	mov $0x600, %esp
 
 	/* Push %eax, which *should* contain the multiboot2 magic.
-	 * We'll get back to it.
+	 * We'll get back to it in a moment.
 	 */
 	push %eax
 
@@ -24,7 +24,11 @@ start:
 	mov $0x07, %dl
 	call write_message
 
-	/* TODO: the OS */
+	/* Pop %eax; check multiboot2 initialization. */
+	pop %eax
+	call check_multiboot2
+	call check_cpuid
+	call check_long_mode
 
 	mov $everything_ok, %esi
 	mov $0x07, %dl
