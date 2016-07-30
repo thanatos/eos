@@ -7,9 +7,8 @@
 .global init_text_ops
 init_text_ops:
 	/* Load the base video port from the BDA (BIOS Data Area) */
-	movb (0x0463), %al
-	movb (0x0464), %ah
-	movw %ax, (base_video_port)
+	mov (0x0463), %ax
+	mov %ax, (base_video_port)
 
 	ret
 
