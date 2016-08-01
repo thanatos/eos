@@ -1,0 +1,14 @@
+<undecided>
+
+With the exceptions of:
+
+* /libcore_nofp.patch, which is from
+  https://github.com/thepowersgang/rust-barebones-kernel/blob/ba761599cfa627b6d3059e3f63c07c5974f2a9e7/libcore_nofp.patch
+  and has been only slightly modified. It is released into the public domain
+  (the same license I found it under); specifically,
+  https://github.com/thepowersgang/rust-barebones-kernel/blob/ba761599cfa627b6d3059e3f63c07c5974f2a9e7/LICENSE
+* /src/lib.rs, which is from http://os.phil-opp.com/set-up-rust.html /
+  https://github.com/phil-opp/blog_os, and is dual-licensed under the MIT and
+  Apache 2.0 licenses. (The same license that I found it under.) It has been
+  modified slightly. (but the modifications are also released under the same
+  dual-license, MIT or Apache 2.0.)

@@ -9,7 +9,7 @@ fi
 # Stage the data we want in our image:
 mkdir -p isofiles/boot/grub
 cp grub.cfg isofiles/boot/grub/.
-cp kernel.bin isofiles/boot/.
+cp ../target/debug/kernel.bin isofiles/boot/.
 
 # Make the image:
 grub2-mkrescue -o os.iso isofiles

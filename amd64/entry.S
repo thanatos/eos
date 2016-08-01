@@ -41,12 +41,15 @@ start:
 
 .code64
 
+.extern rust_main
 
 .global start_long_mode
 start_long_mode:
 	xor %rax, %rax
 	movq $(0xb8000 + 80 * 2 + 4), %rax
 	movq $0x2f4b2f4f, (%rax)
+
+	call rust_main
 	hlt
 
 
