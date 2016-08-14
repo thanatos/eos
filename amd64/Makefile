@@ -4,6 +4,10 @@ endif
 
 PROFILE ?= debug
 
+ifeq (${PROFILE}, debug)
+AS_FLAGS := -g
+endif
+
 OBJ_DIR=${TARGET_DIR}/${PROFILE}/native/amd64
 OUTPUT_DIR=${TARGET_DIR}/${PROFILE}
 
@@ -11,7 +15,9 @@ OUTPUT_DIR=${TARGET_DIR}/${PROFILE}
 all: ${OUTPUT_DIR}/kernel.bin
 
 
-${OUTPUT_DIR}/kernel.bin: $(addprefix ${OBJ_DIR}/,$(patsubst %.S,%.o,$(shell find -iname '*.S' | sed -e s_^\\./__)))
+export PATH:=${PATH}:${HOME}/.toolchain/binutils-2.26.1/bin
+
+${OUTPUT_DIR}/kernel.bin: $(addprefix ${OBJ_DIR}/,$(patsubst %.S,%.o,$(shell find -iname '*.S' | sed -e s_^\\./__))) ${TARGET_DIR}/${PROFILE}/libeos.a ${TARGET_DIR}/build/librlibc.rlib
 	x86_64-elf-ld \
 		--nmagic \
 		-o ${OUTPUT_DIR}/kernel.bin \
