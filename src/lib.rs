@@ -1,6 +1,8 @@
 #![feature(lang_items)]
 #![no_std]
 
+extern crate rlibc;
+
 #[no_mangle]
 pub extern fn rust_main() {
 
@@ -24,7 +26,15 @@ pub extern fn rust_main() {
     // write `Hello World!` to the VGA buffer.
     let buffer_ptr = (0xb8000 + 80 * 2 * 5) as *mut _;
     unsafe { *buffer_ptr = hello_colored };
+
+    vga_text::init();
+    vga_text::write_string("This is a test of VGA console writing.\n", 0xa);
 }
+
 
 #[lang = "eh_personality"] extern fn eh_personality() {}
 #[lang = "panic_fmt"] extern fn panic_fmt() -> ! {loop{}}
+
+
+mod io_ports;
+mod vga_text;

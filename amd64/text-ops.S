@@ -167,6 +167,17 @@ vga_clear_screen_loop:
 	ret
 
 
+.code64
+
+
+.global vga_get_early_position
+vga_get_early_position:
+	xor %rax, %rax
+	mov (cursor_x), %al
+	mov (cursor_y), %ah
+	ret
+
+
 .data
 error_then_colon:
 .asciz "Error: "
