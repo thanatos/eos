@@ -9,6 +9,7 @@ start:
 	movw $0x2f4b, (0xb8002)
 
 	/* A very basic stack. */
+	/* TODO: use arithmetic w/ variables... */
 	mov $(boot_stack + 64), %esp
 
 	/* Push %eax, which *should* contain the multiboot2 magic.
@@ -45,6 +46,9 @@ start:
 
 .global start_long_mode
 start_long_mode:
+	/* TODO: use arithmetic w/ variables... */
+	mov $(boot_stack + 1024), %rsp
+	mov %rsp, %rbp
 	xor %rax, %rax
 	movq $(0xb8000 + 80 * 2 + 4), %rax
 	movq $0x2f4b2f4f, (%rax)
@@ -59,4 +63,4 @@ booting_eos:
 everything_ok:
 .asciz "Everything was okay.\n"
 
-.lcomm boot_stack, 64
+.lcomm boot_stack, 1024
