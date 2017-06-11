@@ -11,6 +11,9 @@ pub extern fn rust_main() {
 }
 
 
+// NOTE: this needs #[no_mangle] due to what appears might be a bug in Rust;
+// see:
+//   https://github.com/rust-lang/rust/issues/38281
 #[no_mangle]
 #[lang = "panic_fmt"]
 extern fn panic_fmt(fmt: core::fmt::Arguments, file: &'static str, line: u32) -> ! {
