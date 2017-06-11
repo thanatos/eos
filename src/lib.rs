@@ -11,6 +11,7 @@ pub extern fn rust_main() {
 }
 
 
+#[no_mangle]
 #[lang = "panic_fmt"]
 extern fn panic_fmt(fmt: core::fmt::Arguments, file: &'static str, line: u32) -> ! {
     let mut line_text_data: [u8; 10] = [0; 10];
