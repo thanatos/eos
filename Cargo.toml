@@ -1,0 +1,10 @@
+[package]
+name = "eos"
+version = "0.0.1"
+authors = ["Roy Wellington Ⅳ"]
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+rlibc = "1.0"
