@@ -16,9 +16,26 @@ ${TARGET_ROOT}/${PROFILE}/libeos.a: $(shell find src -type f -and -iname '*.rs')
 
 TARGET_ABSPATH=$(abspath ${TARGET_ROOT})
 
+# ── the kernel
+
 kernel: | ${TARGET_ROOT}/${PROFILE}/libeos.a binutils
 	cd amd64 && TARGET_DIR=${TARGET_ABSPATH} $(MAKE)
 
+# ── shortcuts
+
+image: | kernel
+	cd amd64 && ./mkimage.sh
+
+run: | image
+	qemu-system-x86_64 -cdrom ./amd64/os.iso
+
+run_debug: | image
+	qemu-system-x86_64 -cdrom ./amd64/os.iso -s -S
+
+run_gdb:
+	gdb -x gdb-init
+
+# ── binutils
 
 binutils: | ${TARGET_ROOT}/binutils/bin/x86_64-elf-as
 

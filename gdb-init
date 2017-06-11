@@ -1,0 +1,11 @@
+add-auto-load-safe-path /home/royiv/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/etc
+add-auto-load-scripts-directory /home/royiv/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/etc
+add-auto-load-safe-path gdb_scripts
+add-auto-load-scripts-directory gdb_scripts
+
+symbol-file target/x86_64-unknown-none-gnu/debug/kernel.bin
+
+set architecture i386:x86-64
+target remote localhost:1234
+b rust_main
+c
