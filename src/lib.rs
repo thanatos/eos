@@ -11,21 +11,22 @@ pub extern fn rust_main() {
 }
 
 
-// NOTE: this needs #[no_mangle] due to what appears might be a bug in Rust;
-// see:
-//   https://github.com/rust-lang/rust/issues/38281
-#[no_mangle]
-#[lang = "panic_fmt"]
-extern fn panic_fmt(fmt: core::fmt::Arguments, file: &'static str, line: u32) -> ! {
+#[panic_handler]
+fn panic(info: &core::panic::PanicInfo) -> ! {
     let mut line_text_data: [u8; 10] = [0; 10];
-    let str_len = fmt::u32_to_str(line, &mut line_text_data);
-    let line_str = core::str::from_utf8(&line_text_data[..str_len]).unwrap();
-    vga_text::write_string("Kernel panic!\n", 0xc);
-    vga_text::write_string("  at ", 0x7);
-    vga_text::write_string(file, 0x7);
-    vga_text::write_string(":", 0x7);
-    vga_text::write_string(line_str, 0x7);
-    vga_text::write_string("\n", 0x7);
+    if let Some(location) = info.location() {
+        let str_len = fmt::u32_to_str(location.line(), &mut line_text_data);
+        let line_str = core::str::from_utf8(&line_text_data[..str_len]).unwrap();
+        vga_text::write_string("Kernel panic!\n", 0xc);
+        vga_text::write_string("  at ", 0x7);
+        vga_text::write_string(location.file(), 0x7);
+        vga_text::write_string(":", 0x7);
+        vga_text::write_string(line_str, 0x7);
+        vga_text::write_string("\n", 0x7);
+    } else {
+        vga_text::write_string("Kernel panic!\n", 0xc);
+        vga_text::write_string("  at unknown location.", 0x7);
+    }
     loop{}
 }
 

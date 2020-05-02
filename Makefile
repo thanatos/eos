@@ -12,7 +12,7 @@ endif
 TARGET_TRIPLE=x86_64-unknown-none-gnu
 TARGET_ROOT=target/${TARGET_TRIPLE}
 ${TARGET_ROOT}/${PROFILE}/libeos.a: $(shell find src -type f -and -iname '*.rs')
-	xargo build --target x86_64-unknown-none-gnu
+	RUST_TARGET_PATH=$$(pwd) xargo build --target x86_64-eos
 
 TARGET_ABSPATH=$(abspath ${TARGET_ROOT})
 

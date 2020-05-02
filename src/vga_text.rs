@@ -83,7 +83,7 @@ pub fn write_string(s: &str, color: u8) {
                 }
                 scroll_if_needed();
             }
-            '\x00' ... '\x7e' => {
+            '\x00' ..= '\x7e' => {
                 unsafe {
                     let output_location = position_to_address(cursor_position);
                     *output_location = ColoredChar {
@@ -110,8 +110,8 @@ pub fn write_string(s: &str, color: u8) {
 fn update_cursor_position(position: CursorPosition) {
     let position = position.x as u16 + position.y as u16 * 80;
     let vga_base_port = get_video_base_io_port();
-    ::io_ports::out_u8(vga_base_port, 0x0f);
-    ::io_ports::out_u8(vga_base_port + 1, (position & 0xff) as u8);
-    ::io_ports::out_u8(vga_base_port, 0x0e);
-    ::io_ports::out_u8(vga_base_port + 1, (position >> 8) as u8);
+    crate::io_ports::out_u8(vga_base_port, 0x0f);
+    crate::io_ports::out_u8(vga_base_port + 1, (position & 0xff) as u8);
+    crate::io_ports::out_u8(vga_base_port, 0x0e);
+    crate::io_ports::out_u8(vga_base_port + 1, (position >> 8) as u8);
 }
